@@ -1,9 +1,14 @@
-# A template user project for use with Chaste.
+# A simple repository to store Chaste simulations
 
-You now simply log in to github, then click the big green "Use this template" button to use a copy of this repository as the basis of your own new repository under your github username/organisation (this 'template' status avoids complications with forks all being linked back to this repo).
+Initially, this was cretaed following the [Chaste project template](https://github.com/Chaste/template_project), as [recommended](https://chaste.github.io/docs/user-guides/user-projects/).
 
-Alternatively, if you aren't a github user, you can download a zip (see Releases button) and start your own repository with that.
+This is intended to be cloned into `Chaste/projects/` where `Chaste/` contains the Chaste source code (cloned or downloaded). 
 
-Then see the [User Projects](https://chaste.github.io/docs/user-guides/user-projects/) guide page on the Chaste website for more information.
+For new simulations
 
-If you clone this repository, you should make sure to rename the template_project folder with your project name and run the 'setup_project.py' script to avoid conflicts if you have multiple projects.
+ - Add a file `Testxxxxx.hpp` to the `test` directory containing the simulation code
+ - Add `Testxxxxx.hpp` to `ContinuousTestPack.txt` to make it visible to the cmake infrastructure.
+ - Navigate to the `chaste_build` directory: this is the one where Chaste was built after downloading (see [configure and build steps](https://chaste.github.io/docs/user-guides/cmake-first-run/) )
+ - Type `ccmake /path/to/chaste_source_code_directory` (the same as `Chaste/` mentioned above). Type `c` to configure, then exit with `e`, then `g` to generate
+ - Then the target should be available: `make Testxxxxx` should prepare the executable
+ - Run with `ctest -R Testxxxxx`
