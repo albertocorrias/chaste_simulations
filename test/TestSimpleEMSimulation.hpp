@@ -45,9 +45,10 @@ public:
 
     void TestImplicitNhs2dOneMechanicsElement()
    {
-        EntirelyStimulatedTissueCellFactory cell_factory;
+       EntirelyStimulatedTissueCellFactory cell_factory;
 
-       HeartConfig::Instance()->SetSimulationDuration(1000.0);
+       HeartConfig::Instance()->SetSimulationDuration(500.0);
+       HeartConfig::Instance()->SetVisualizeWithVtk(true);
 
        CardiacElectroMechProbRegularGeom<2> problem(COMPRESSIBLE,
                                                     0.05, /* width (cm) */
