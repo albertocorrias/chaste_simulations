@@ -35,26 +35,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "CardiacElectroMechanicsProblemVTK.hpp"
 #include "CardiacElectroMechanicsProblem.hpp"
-#include "OutputFileHandler.hpp"
-#include "ReplicatableVector.hpp"
-#include "HeartConfig.hpp"
-#include "LogFile.hpp"
-#include "ChastePoint.hpp"
-#include "Element.hpp"
-#include "BoundaryConditionsContainer.hpp"
-#include "AbstractDynamicLinearPdeSolver.hpp"
-#include "TimeStepper.hpp"
-#include "TrianglesMeshWriter.hpp"
-#include "Hdf5ToMeshalyzerConverter.hpp"
-#include "Hdf5ToCmguiConverter.hpp"
-#include "MeshalyzerMeshWriter.hpp"
-#include "PetscTools.hpp"
-#include "ImplicitCardiacMechanicsSolver.hpp"
-#include "ExplicitCardiacMechanicsSolver.hpp"
-#include "CmguiDeformedSolutionsWriter.hpp"
-#include "VoltageInterpolaterOntoMechanicsMesh.hpp"
-#include "BidomainProblem.hpp"
-
+#include "VtkMeshWriter.hpp"
 
 
 
@@ -84,6 +65,9 @@ template<unsigned DIM, unsigned ELEC_PROB_DIM>
 void CardiacElectroMechanicsProblemVTK<DIM,ELEC_PROB_DIM>::OnEndOfTimeStep(unsigned counter)
 {
     std::cout<<counter<<std::endl;
+    
+
+
 }
 
 // Explicit instantiation

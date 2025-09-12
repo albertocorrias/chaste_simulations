@@ -47,10 +47,10 @@ public:
    {
        EntirelyStimulatedTissueCellFactory cell_factory;
 
-       HeartConfig::Instance()->SetSimulationDuration(500.0);
+       HeartConfig::Instance()->SetSimulationDuration(10.0);
        HeartConfig::Instance()->SetVisualizeWithVtk(true);
 
-       CardiacElectroMechProbRegularGeom<2> problem(COMPRESSIBLE,
+       CardiacElectroMechProbRegularGeom<2> problem(INCOMPRESSIBLE,
                                                     0.05, /* width (cm) */
                                                     10,    /* mech mesh size*/
                                                     50,    /* elec elem each dir */
