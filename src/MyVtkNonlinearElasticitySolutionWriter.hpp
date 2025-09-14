@@ -33,40 +33,26 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-#ifndef VTKNONLINEARELASTICITYSOLUTIONWRITER_HPP_
-#define VTKNONLINEARELASTICITYSOLUTIONWRITER_HPP_
+#ifndef MYVTKNONLINEARELASTICITYSOLUTIONWRITER_HPP_
+#define MYVTKNONLINEARELASTICITYSOLUTIONWRITER_HPP_
 
 #include "AbstractNonlinearElasticitySolver.hpp"
 
 /**
- *  Class for write mechanics solutions to .vtu file (for visualisation in Paraview), including
- *  displacement, pressure if incompressible simulation, different strains, and (in future) stresses.
+ *  \
  */
 template<unsigned DIM>
-class VtkNonlinearElasticitySolutionWriter
+class MyVtkNonlinearElasticitySolutionWriter : public VtkMeshWriter<DIM,DIM>
 {
-friend class TestVtkNonlinearElasticitySolutionWriter;
+
 
 private:
     /** Pointer to the mechanics solver which performed the calculation */
     AbstractNonlinearElasticitySolver<DIM>* mpSolver;
-    /** Whether to write strains for each element */
-    bool mWriteElementWiseStrains;
-    /** What type of strain to write for each element, from: F = dx/dX, C = F^T F, E = 1/2 (C-I) */
-    StrainType mElementWiseStrainType;
 
-    /** Tensor data to be written to the .vtu file. This is a member variable only for testing reasons. */
-    std::vector<c_matrix<double,DIM,DIM> > mTensorData;
+    /** Pointer to the deformed mesh, used only for output here */
+    QuadraticMesh<DIM>* mpDeformedMesh;
 
-    /** The base file name used when writing the output*/
-    std::string mOutputBaseFileNAme;
-
-    /**Some additional scalar node-wise data*/
-    std::vector<double> mNodeScalarData;
-
-    //// For future..
-    //    bool mWriteNodewiseStresses;
-    //    StressType mNodeWiseStressType;
 
 public:
 
@@ -74,29 +60,15 @@ public:
      *  Constructor
      *  @param rSolver mechanics solver which performed the calculation
      */
-    VtkNonlinearElasticitySolutionWriter(AbstractNonlinearElasticitySolver<DIM>& rSolver)
-        : mpSolver(&rSolver),
-          mWriteElementWiseStrains(false),
-          mOutputBaseFileNAme("solution")
-    {
-    }
-
-    /**
-     *  Set write strains for each element. Can write any of: F = dx/dX, C = F^T F, E = 1/2 (C-I)
-     *  @param strainType Which strain to write, choose one of: DEFORMATION_GRADIENT_F, DEFORMATION_TENSOR_C, LAGRANGE_STRAIN_E
-     */
-    void SetWriteElementWiseStrains(StrainType strainType)
-    {
-        mWriteElementWiseStrains = true;
-        mElementWiseStrainType = strainType;
-    }
+    MyVtkNonlinearElasticitySolutionWriter(AbstractNonlinearElasticitySolver<DIM>& rSolver, const std::string& rDirectory, const std::string& rBaseName, const bool& rCleanDirectory=true);
 
     void SetOutputBaseFileName(const std::string& rOutputBaseFileName);
 
-    void AddNodeScalarData(const std::string& rName, std::vector<double>& rData);
+    QuadraticMesh<DIM>* pGetDeformedMesh();
+    
+    void WriteMyFiles();
 
-    /** Write the .vtu file */
-    void Write();
+    void ApplyDeformation(std::vector<c_vector<double,DIM> >& rPositions);
 };
 
 #endif // VTKNONLINEARELASTICITYSOLUTIONWRITER_HPP_

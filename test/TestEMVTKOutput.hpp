@@ -79,15 +79,18 @@ public:
         boundary_elems.push_back(* (mechanics_mesh.GetBoundaryElementIteratorBegin()));
         problem_defn.SetApplyNormalPressureOnDeformedSurface(boundary_elems, 0.0);
 
-        HeartConfig::Instance()->SetSimulationDuration(100.0);
+        HeartConfig::Instance()->SetSimulationDuration(600.0);
 
-        CardiacElectroMechanicsProblemVTK<2,1>   problem(COMPRESSIBLE,
+        CardiacElectroMechanicsProblem<2,1>   problem(COMPRESSIBLE,
                                                       MONODOMAIN,
                                                       &electrics_mesh,
                                                       &mechanics_mesh,
                                                       &cell_factory,
                                                       &problem_defn,
                                                       "TestCardiacEmHomogeneousEverythingCompressible");
+        
+
+        
         problem.Solve();
    }
 };

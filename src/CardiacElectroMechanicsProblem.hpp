@@ -199,7 +199,7 @@ protected :
      */
     void WriteWatchedLocationData(double time, Vec voltage);
 
-
+    MyVtkNonlinearElasticitySolutionWriter<DIM>* mpVtkWriter;
 public :
 
     /**
